@@ -8,7 +8,7 @@ on:
 jobs:
   updates:
     name: Update the OS and reboot the VM
-    runs-on: pihole
+    runs-on: rpi-dns
     steps:
       - name: Update pihole
         shell: bash
@@ -27,7 +27,7 @@ jobs:
 
   healthcheck:
     name: Verify everything is back up and online
-    runs-on: pihole
+    runs-on: rpi-dns
     needs: [wait]
     steps:
       - name: Verify pihole is back up
