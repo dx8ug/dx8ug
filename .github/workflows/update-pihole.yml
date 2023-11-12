@@ -1,4 +1,4 @@
-name: Upadate pihole
+name: Update pihole
 
 on:
   workflow_dispatch:
