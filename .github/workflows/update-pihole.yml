@@ -1,0 +1,35 @@
+name: Upadate pihole
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 06 * * 3" # 8:15am every Wednesday (UTC)
+
+jobs:
+  updates:
+    name: Update the OS and reboot the VM
+    runs-on: pihole
+    steps:
+      - name: Update pihole
+        shell: bash
+        run: |
+          pihole -up
+          pihole -g
+  
+  wait:
+    name: wait 5 minutes
+    runs-on: ubuntu-latest
+    needs: [updates]
+    steps:
+      - name: sleep 300
+        shell: bash
+        run: sleep 300
+
+  healthcheck:
+    name: Verify everything is back up and online
+    runs-on: pihole
+    needs: [wait]
+    steps:
+      - name: Verify pihole is back up
+        shell: bash
+        run: pihole status
